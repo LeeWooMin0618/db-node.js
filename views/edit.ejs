@@ -1,0 +1,19 @@
+<h2 class="fw-bold mb-4">글 수정</h2>
+
+<form method="post" enctype="multipart/form-data">
+
+  <label class="fw-semibold">제목</label>
+  <input name="title" class="form-control mb-3" value="<%= post.title %>" required>
+
+  <label class="fw-semibold">내용</label>
+  <textarea name="content" rows="10" class="form-control mb-3"><%= post.content %></textarea>
+
+  <label class="fw-semibold">이미지 변경</label>
+  <input type="file" name="image" class="form-control mb-3">
+
+  <% if (post.image) { %>
+    <img src="/uploads/<%= post.image %>" class="img-fluid rounded mb-3" />
+  <% } %>
+
+  <button class="btn btn-primary btn-custom">수정 완료</button>
+</form>

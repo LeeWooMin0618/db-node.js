@@ -1,0 +1,28 @@
+<h4 class="fw-bold mb-3">댓글</h4>
+
+<!-- 댓글 리스트 -->
+<% comments.forEach(c => { %>
+  <div class="comment-box">
+    <b><%= c.username %></b>
+    <p class="mb-1"><%= c.content %></p>
+    <div class="text-muted small"><%= c.created_at.toLocaleString() %></div>
+
+    <% if (user && (user.id === c.user_id || user.is_admin)) { %>
+      <a href="/comment/delete/<%= c.id %>"
+         onclick="return confirm('댓글 삭제?')"
+         class="btn btn-sm btn-outline-danger mt-1">삭제</a>
+    <% } %>
+  </div>
+<% }) %>
+
+<!-- 댓글 입력 -->
+<% if (user) { %>
+  <form method="post" action="/comment/write/<%= post.id %>" class="mt-3">
+    <div class="input-group">
+      <input name="content" class="form-control" placeholder="댓글 입력…" />
+      <button class="btn btn-primary btn-custom">작성</button>
+    </div>
+  </form>
+<% } else { %>
+  <p class="text-muted">로그인 후 댓글 작성 가능</p>
+<% } %>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>커뮤니티 게시판</title>
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: #f5f6fa;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .navbar {
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .content-container {
+      background: white;
+      border-radius: 14px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .table th {
+      background: #eef1f7 !important;
+    }
+
+    /* 버튼 디자인 개선 */
+    .btn-custom {
+      border-radius: 10px;
+      padding: 7px 15px;
+    }
+
+    .post-card {
+      border: 1px solid #e7e9ef;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background: white;
+      transition: all 0.15s ease;
+    }
+    .post-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .comment-box {
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #fafbfd;
+    }
+  </style>
+</head>
+
+<body class="container py-4">
+
+  <!-- 네비게이션 -->
+  <nav class="navbar navbar-expand-lg bg-white mb-4 px-4">
+    <div class="container-fluid">
+
+      <a class="navbar-brand fw-bold" href="/board/free" style="font-size: 1.3rem;">
+        💬 커뮤니티
+      </a>
+
+      <div>
+        <a href="/board/free" class="btn btn-outline-primary btn-sm btn-custom">자유게시판</a>
+        <a href="/board/notice" class="btn btn-outline-warning btn-sm btn-custom">공지사항</a>
+      </div>
+
+      <div>
+        <% if (user) { %>
+          <span class="me-2 fw-semibold">👤 <%= user.username %></span>
+          <a href="/auth/logout" class="btn btn-danger btn-sm btn-custom">로그아웃</a>
+        <% } else { %>
+          <a href="/auth/login" class="btn btn-primary btn-sm btn-custom">로그인</a>
+          <a href="/auth/register" class="btn btn-secondary btn-sm btn-custom">회원가입</a>
+        <% } %>
+      </div>
+
+    </div>
+  </nav>
+
+  <div class="content-container">
+    <%- body %>
+  </div>
+
+</body>
+</html>

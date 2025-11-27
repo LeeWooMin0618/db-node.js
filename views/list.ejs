@@ -1,0 +1,38 @@
+<h2 class="mb-4 fw-bold">
+  <%= category === 'free' ? '자유게시판' : '공지사항' %>
+</h2>
+
+<!-- 검색 -->
+<form class="input-group mb-4" method="get" action="/board/<%= category %>/search">
+  <input class="form-control" name="keyword" placeholder="검색어 입력…" />
+  <button class="btn btn-secondary btn-custom">검색</button>
+</form>
+
+<!-- 카드형 리스트 -->
+<% list.forEach(item => { %>
+  <div class="post-card">
+    <a href="/board/<%= category %>/view/<%= item.id %>" class="fs-5 fw-semibold text-decoration-none text-dark">
+      <%= item.title %>
+    </a>
+
+    <div class="text-muted small mt-2">
+      작성자: <%= item.username %> · 조회수: <%= item.views %> ·
+      <%= item.created_at.toLocaleString() %>
+    </div>
+  </div>
+<% }) %>
+
+<!-- 페이지네이션 -->
+<div class="mt-4">
+  <% for (let i = 1; i <= totalPage; i++) { %>
+    <a href="/board/<%= category %>?page=<%= i %>"
+       class="btn btn-sm <%= page===i ? 'btn-primary' : 'btn-outline-primary' %> btn-custom">
+       <%= i %>
+    </a>
+  <% } %>
+</div>
+
+<!-- 글쓰기 -->
+<% if (user) { %>
+  <a href="/board/<%= category %>/write" class="btn btn-success mt-4 btn-custom">글쓰기</a>
+<% } %>

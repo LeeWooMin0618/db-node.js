@@ -1,0 +1,25 @@
+<h2 class="fw-bold mb-3"><%= post.title %></h2>
+
+<div class="text-muted mb-3">
+  작성자: <%= post.username %> · 조회수: <%= post.views %> ·
+  <%= post.created_at.toLocaleString() %>
+</div>
+
+<!-- 본문 -->
+<div class="p-4 mb-4" style="background:white; border-radius:12px; border:1px solid #eee;">
+  <%= post.content.replace(/\n/g, "<br>") %>
+</div>
+
+<!-- 버튼 -->
+<div class="mb-4">
+  <% if (user && (user.id === post.user_id || user.is_admin)) { %>
+    <a href="/board/<%= category %>/edit/<%= post.id %>" class="btn btn-warning btn-custom">수정</a>
+    <a href="/board/<%= category %>/delete/<%= post.id %>"
+       onclick="return confirm('삭제하시겠습니까?')"
+       class="btn btn-danger btn-custom">삭제</a>
+  <% } %>
+  <a href="/board/<%= category %>" class="btn btn-secondary btn-custom">목록</a>
+</div>
+
+<!-- 댓글 -->
+<%- include("partials/comments", { comments, post, category, user }) %>
