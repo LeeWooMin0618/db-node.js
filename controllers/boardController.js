@@ -70,7 +70,7 @@ exports.write = async (req, res) => {
   const { title, content } = req.body;
 
   await db.query(
-    `INSERT INTO board (user_id, category, title, content, image)
+    `INSERT INTO board (user_id, category, title, content)
      VALUES (?, ?, ?, ?, ?)`,
     [req.session.user.id, category, title, content, null]
   );
@@ -104,8 +104,8 @@ exports.edit = async (req, res) => {
   }
 
   await db.query(
-    `UPDATE board SET title=?, content=?, image=?, updated_at=NOW() WHERE id=?`,
-    [title, content, image, id]
+    `UPDATE board SET title=?, content=?, updated_at=NOW() WHERE id=?`,
+    [title, content, id]
   );
 
   res.redirect(`/board/${category}/view/${id}`);
@@ -126,3 +126,4 @@ exports.delete = async (req, res) => {
 
   res.redirect(`/board/${category}`);
 };
+
