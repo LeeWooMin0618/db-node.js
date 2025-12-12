@@ -1,6 +1,4 @@
 const db = require("../config/db");
-const path = require("path");
-const fs = require("fs");
 
 // 목록 + 페이징
 exports.list = async (req, res) => {
@@ -64,15 +62,16 @@ exports.writeForm = (req, res) => {
   res.render("write", { category: req.params.category, user: req.session.user });
 };
 
-// 글쓰기 처리
+// 글쓰기 처리 (이미지 제거)
 exports.write = async (req, res) => {
   const category = req.params.category;
   const { title, content } = req.body;
 
   await db.query(
-    `INSERT INTO board (user_id, category, title, content, image)
-     VALUES (?, ?, ?, ?, ?)`,
-    [req.session.user.id, category, title, content, null]
+    `INSERT INTO board (user_id, category, title, content)
+     VALUES (?, ?, ?, ?)`,
+
+    [req.session.user.id, category, title, content]
   );
 
   res.redirect(`/board/${category}`);
@@ -91,7 +90,7 @@ exports.editForm = async (req, res) => {
   res.render("edit", { post, category: req.params.category, user: req.session.user });
 };
 
-// 수정 처리
+// 수정 처리 (이미지 제거)
 exports.edit = async (req, res) => {
   const id = req.params.id;
   const category = req.params.category;
@@ -104,8 +103,8 @@ exports.edit = async (req, res) => {
   }
 
   await db.query(
-    `UPDATE board SET title=?, content=?, image=?, updated_at=NOW() WHERE id=?`,
-    [title, content, image, id]
+    `UPDATE board SET title=?, content=?, updated_at=NOW() WHERE id=?`,
+    [title, content, id]
   );
 
   res.redirect(`/board/${category}/view/${id}`);
